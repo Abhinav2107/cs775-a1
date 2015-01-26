@@ -13,7 +13,7 @@ LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(GLUTLIB) -lm
 BIN=BVHPlayer
 OBJ1=error.o matvec.o
 OBJ2=bvh_tokens.o bvh_joints.o bvh_hierarchy.o bvh.o 
-OBJ3=main.o
+OBJ3=main.o gl_interface.o
 OBJ=$(OBJ1) $(OBJ2) $(OBJ3)
 LIB1=libUtil.a
 LIB2=libBVH.a
@@ -64,3 +64,4 @@ bvh_tokens.o: bvh_tokens.hpp
 error.o: error.hpp
 main.o: bvh_tokens.hpp bvh.hpp
 matvec.o: matvec.hpp error.hpp
+gl_interface.o: gl_interface.hpp
