@@ -7,7 +7,8 @@ GL_LIB_DIR=/usr/lib/
 OPENGLLIB= -lGL
 GLEWLIB= -lGLEW
 GLFWLIB = -lglfw
-LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) -lm
+GLUTLIB = -lglut
+LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(GLUTLIB) -lm
 
 BIN=BVHPlayer
 OBJ1=error.o matvec.o

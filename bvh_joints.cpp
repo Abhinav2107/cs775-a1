@@ -250,4 +250,60 @@ void joint_t::print(std::ostream &out)
 void joint_t::update_matrix(float *data_channels)
 {
   /* CS775: Implement this method. */
+    int i, j;
+ /*   for(i = 0; i < 4; i++) {
+        for(j = 0; j < 4; j++) {
+            if(i == j)
+                M[i][j] = 1;
+            else
+                M[i][j] = 0;
+        }
+    }*/
+    util::math::mat44 MI = util::math::mat44::identity3D();
+    M = MI;
+    for(i = 0; i < channels.num_channels; i++) {
+        switch(channels.ch_order[i]) {
+            case _xpos:
+                {
+                    util::math::mat44 M0 = util::math::mat44::translation3D(data_channels[i], 0, 0);
+                    M = M * M0;
+                    break;
+                }
+            case _ypos:
+                {
+                    util::math::mat44 M1 = util::math::mat44::translation3D(0, data_channels[i], 0);
+                    M = M * M1;
+                    break;
+                }
+            case _zpos:
+                {
+                    util::math::mat44 M2 = util::math::mat44::translation3D(0, 0, data_channels[i]);
+                    M = M * M2;
+                    break;
+                }
+            case _xrot:
+                {
+                    util::math::vec3 v3(1, 0, 0);
+                    util::math::mat44 M3 = util::math::mat44::rotation3D(v3, data_channels[i]);
+                    M = M * M3;
+                    break;
+                }
+            case _yrot:
+                {
+                    util::math::vec3 v4(0, 1, 0);
+                    util::math::mat44 M4 = util::math::mat44::rotation3D(v4, data_channels[i]);
+                    M = M * M4;
+                    break;
+                }
+            case _zrot:
+                {
+                    util::math::vec3 v5(0, 0, 1);
+                    util::math::mat44 M5 = util::math::mat44::rotation3D(v5, data_channels[i]);
+                    M = M * M5;
+                    break;
+                }
+        }
+    }
+    
+
 }

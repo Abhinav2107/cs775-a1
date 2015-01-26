@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include "bvh.hpp"
 #include "error.hpp"
-
+#include "gl_interface.hpp"
 
 bvh::bvh_t* bvh_fig;
 std::string progname, bvhfilename;

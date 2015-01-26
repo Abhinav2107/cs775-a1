@@ -13,11 +13,12 @@
 #include <fstream>
 #include <string>
 #include <list>
+#include <cmath>
 #include "bvh_tokens.hpp"
 #include "bvh_joints.hpp"
 #include "bvh_hierarchy.hpp"
 #include "matvec.hpp"
-
+#include "gl_interface.hpp"
 
 namespace bvh
 {
