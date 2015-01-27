@@ -182,6 +182,7 @@ void joint_t::read(std::ifstream &inp, std::string strtoken)
   inp>>offset[util::math::X]>>offset[util::math::Y]>>offset[util::math::Z];
 
   if (joint_type == _root) absolute_offset = offset;
+  else absolute_offset = offset + parent->get_offset();
 
   if (joint_type != _endsite)
     {
@@ -214,8 +215,8 @@ void joint_t::read(std::ifstream &inp, std::string strtoken)
       joint_t* newchild = new joint_t;
       try
 	{
-	  newchild->read(inp, strtoken);
 	  newchild->parent = this;
+	  newchild->read(inp, strtoken);
 	}
       catch (util::common::error *e)
 	{
@@ -305,5 +306,17 @@ void joint_t::update_matrix(float *data_channels)
         }
     }
     
-
 }
+
+double joint_t::get_max_offset() {
+    double max_offset = absolute_offset.length();
+    std::list<joint_t *>::const_iterator iterator;
+    double child_offset;
+    for(iterator = childlist.begin(); iterator != childlist.end(); iterator++) {
+        child_offset = (*iterator)->get_max_offset();
+        if(child_offset > max_offset)
+            max_offset = child_offset;
+    }
+    return max_offset;
+}
+

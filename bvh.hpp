@@ -111,6 +111,7 @@ namespace bvh
      * CS775: Implement this method
      */
     void render_frame(unsigned int frame_number);
+    double get_max_offset();
   };
   
 }

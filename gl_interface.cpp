@@ -2,6 +2,9 @@
 
 extern double t;
 extern double p;
+extern bool play;
+extern int frame;
+extern int camera;
 
 void initGL(void) {
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -42,5 +45,21 @@ void key_callback(GLFWwindow * window, int key, int scancode, int action, int mo
         if(p < 0)
             p = p + 360;
     }
+    else if(key == GLFW_KEY_SPACE && (action == GLFW_PRESS)) {
+        play = !play;
+    }
+    else if(key == GLFW_KEY_1 && (action == GLFW_PRESS)) {
+        camera = 1;
+    }
+    else if(key == GLFW_KEY_2 && (action == GLFW_PRESS)) {
+        camera = 2;
+    }
+    else if(key == GLFW_KEY_N && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        frame--;
+    }
+    else if(key == GLFW_KEY_M && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+        frame++;
+    }
+
 }
         

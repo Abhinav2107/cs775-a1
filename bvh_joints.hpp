@@ -164,6 +164,7 @@ namespace bvh
      * CS 775: Implement this method
      */
     void update_matrix(float *data_channels);
+    double get_max_offset();
   };
 }
 

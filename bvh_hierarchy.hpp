@@ -58,6 +58,7 @@ namespace bvh
     
   public:
     
+    double size;
     //! Constructor
     /*! The constructor also has the added task of calling 
      *  \ref build_joint_list to make sure that the linear joint

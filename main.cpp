@@ -2,6 +2,12 @@
 double t = 0;
 double p = 0;
 int frame = -1;
+double r = 50;
+double pos_x = 0;
+double pos_y = 0;
+double pos_z = 0;
+int camera = 1;
+bool play = false;
 void usage(void) 
 {
   std::cerr<< "usage: "<<progname<<" [-h] -i bvhfile"<<std::endl<<std::endl;
@@ -16,11 +22,33 @@ void renderGL(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glFrustum(-40, 40, -30, 30, 10, 90);
+    glFrustum(-(1.33 * r), 1.33 * r, -(1 * r), 1 * r, r / 2, 10 * r);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(50*sin(PI * t / 180)*cos(PI * p / 180), 50*sin(PI*p/180), 50*cos(PI*t/180)*cos(PI*p/180), 0, 0, 0, 0, 1, 0);
-    bvh_fig->render_frame(frame);
+    float ** data;
+    data = bvh_fig->get_motion()->get_data();
+    if(frame < 0) {
+        pos_x = 0;
+        pos_y = 0;
+        pos_z = 0;
+    }
+    else {
+        if(camera == 1) {
+            pos_x = data[0][0];
+            pos_y = data[0][1];
+            pos_z = data[0][2];
+        }
+        else if(camera == 2) {
+            pos_x = data[frame][0];
+            pos_y = data[frame][1];
+            pos_z = data[frame][2];
+        }
+    }
+    gluLookAt(pos_x + 2*r*sin(PI * t / 180)*cos(PI * p / 180), pos_y + 2*r*sin(PI*p/180), pos_z + 2*r*cos(PI*t/180)*cos(PI*p/180), pos_x, pos_y, pos_z, 0, 1, 0);
+    if(frame > 0)
+        bvh_fig->render_frame(frame);
+    else
+        bvh_fig->render_canonical_pose();
     glColor4f(1.0, 1.0, 1.0, 1.0);
     glEnd();
 }
@@ -56,6 +84,7 @@ int main(int argc, char **argv)
       try 
 	{ 
 	  bvh_fig->print_hierarchy(std::cout); 
+      r = bvh_fig->get_max_offset();
 	}
       catch (util::common::error *e)
 	{ util::common::error::halt_on_error(e); }
@@ -89,15 +118,14 @@ int main(int argc, char **argv)
     double time;
     double step = (bvh_fig->get_motion()->get_frame_rate());
     int frames = bvh_fig->get_motion()->get_frames();
-    frame = 0;
     while(glfwWindowShouldClose(window) == 0) {
+        if(play && frame < frames-1)
+            frame++;
         time = glfwGetTime();
         renderGL();
         glfwSwapBuffers(window);
         glfwPollEvents();
-        if(frame < frames-1)
-            frame++;
-        while(glfwGetTime() < time + step);
+                while(glfwGetTime() < time + step);
     }
     }
   catch (util::common::error *e)

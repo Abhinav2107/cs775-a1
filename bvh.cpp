@@ -184,3 +184,6 @@ void bvh_t::render_frame(unsigned int frame_number)
     render_pose(hierarchy->get_root_ptr());
 }
 
+double bvh_t::get_max_offset() {
+    return hierarchy->get_root_ptr()->get_max_offset();
+}
