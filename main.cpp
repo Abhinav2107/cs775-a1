@@ -22,7 +22,7 @@ void renderGL(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glFrustum(-(1.33 * r), 1.33 * r, -(1 * r), 1 * r, r / 2, 10 * r);
+    glFrustum(-(1 * r), 1 * r, -(0.75 * r), 0.75 * r, 3.5*r, 15 * r);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     float ** data;
@@ -44,8 +44,19 @@ void renderGL(void) {
             pos_z = data[frame][2];
         }
     }
-    gluLookAt(pos_x + 2*r*sin(PI * t / 180)*cos(PI * p / 180), pos_y + 2*r*sin(PI*p/180), pos_z + 2*r*cos(PI*t/180)*cos(PI*p/180), pos_x, pos_y, pos_z, 0, 1, 0);
-    if(frame > 0)
+    gluLookAt(pos_x + 4*r*sin(PI * t / 180)*cos(PI * p / 180), pos_y + 4*r*sin(PI*p/180), pos_z + 4*r*cos(PI*t/180)*cos(PI*p/180), pos_x, pos_y, pos_z, 0, 1, 0);
+    int x;
+    glColor4f(0.1, 0.1, 0.1, 1.0);
+    glBegin(GL_QUADS);
+    double z = pos_z - 7 * r;
+    for(x = -100 * r; x < 100 * r; x+=2*r) {
+        glVertex3f(x, -100 * r, z);
+        glVertex3f(x+r, -100 * r, z);
+        glVertex3f(x+r, 100 * r, z);
+        glVertex3f(x, 100 * r, z);
+    }
+    glEnd();
+    if(frame >= 0)
         bvh_fig->render_frame(frame);
     else
         bvh_fig->render_canonical_pose();
