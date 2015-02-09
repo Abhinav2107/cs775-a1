@@ -11,6 +11,11 @@ void initGL(void) {
     glClearDepth(1.0);
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST);
+    char fakeParam[] = "fake";
+    char *fakeargv[] = { fakeParam, NULL };
+    int fakeargc = 1;
+
+    glutInit( &fakeargc, fakeargv );
     //glShadeModel(GL_SMOOTH)
 }
 

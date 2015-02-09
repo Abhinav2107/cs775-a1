@@ -4,7 +4,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #define PI 3.14159265359
 
 void initGL(void);

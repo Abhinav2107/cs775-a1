@@ -7,7 +7,7 @@ GL_LIB_DIR=/usr/lib/
 OPENGLLIB= -lGL
 GLEWLIB= -lGLEW
 GLFWLIB = -lglfw
-GLUTLIB = -lglut
+GLUTLIB = -lglut -lGLU
 LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(GLUTLIB) -lm
 
 BIN=BVHPlayer
@@ -37,8 +37,8 @@ $(LIB1): $(OBJ1)
 $(LIB2): $(OBJ2)
 	$(AR) rcs $@ $(OBJ2)
 
-main: $(OBJ3) $(LIB1) $(LIB2)
-	$(CC) $(OBJ3) -L./ $(LIB1) $(LIB2) $(LDFLAGS) $(LIBS) -o $(BIN)
+main: $(OBJ3) $(LIB2) $(LIB1)
+	$(CC) $(OBJ3) -L./ $(LIB2) $(LIB1) $(LDFLAGS) $(LIBS) -o $(BIN)
 
 docs: doc/Doxyfile
 	cd doc; doxygen Doxyfile
