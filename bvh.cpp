@@ -182,6 +182,81 @@ void bvh_t::render_frame(unsigned int frame_number)
         j->update_matrix(data_channels);
     }
     render_pose(hierarchy->get_root_ptr());
+
+    /*le Transformer*/    
+    body* b;
+
+    /*Variables for Transformer*/
+    b->pos_x = data_channels[0];
+    b->pos_y = data_channels[1];
+    b->pos_z = data_channels[2];
+
+    //b->elbows_y_offset = data_channels[];
+    //b->count_elbows_in = data_channels[];
+    //b->count_elbows_out = data_channels[];
+
+    //Body Parts
+    /*Waist*/
+    b->waist_x = data_channels[4];
+    b->waist_y = data_channels[5];
+    b->waist_z = data_channels[3];
+
+    /*Neck*/
+    b->neck_x = data_channels[13];
+    b->neck_y = data_channels[14];
+    b->neck_z = data_channels[12];
+
+    /*Right Shoulder*/
+    b->right_shoulder_x = data_channels[34];
+    b->right_shoulder_y = data_channels[35];
+    b->right_shoulder_z = data_channels[33];
+
+    /*Left Shoulder*/
+    b->left_shoulder_x = data_channels[25];
+    b->left_shoulder_y = data_channels[26];
+    b->left_shoulder_z = data_channels[24];
+
+    /*Right Wrist*/
+    b->right_wrist_x = data_channels[40];
+    b->right_wrist_z = data_channels[39];
+
+    /*Left Wrist*/
+    b->left_wrist_x = data_channels[31];
+    b->left_wrist_z = data_channels[30];
+
+    /*Right Hip*/
+    b->right_hip_x = data_channels[55];
+    b->right_hip_y = data_channels[56];
+    b->right_hip_z = data_channels[54];
+
+    /*Left Hip*/
+    b->left_hip_x = data_channels[43];
+    b->left_hip_y = data_channels[44];
+    b->left_hip_z = data_channels[42];
+
+    /*Left Elbow*/
+    b->left_elbow_x = data_channels[28];
+
+    /*Right Elbow*/
+    b->right_elbow_x = data_channels[37];
+
+    /*Left Knee*/
+    b->left_knee_x = data_channels[46];
+
+    /*Right Knee*/
+    b->right_knee_x = data_channels[58];
+
+    /*Left Ankle*/
+    b->left_ankle_x = data_channels[49];
+    b->left_ankle_y = data_channels[50];
+
+    /*Right Ankle*/
+    b->right_ankle_x = data_channels[61];
+    b->right_ankle_y = data_channels[62];
+
+    /*Shoulder Joints*/
+    b->rs_joint_x = data_channels[31];
+    b->ls_joint_x = data_channels[22];
 }
 
 double bvh_t::get_max_offset() {
