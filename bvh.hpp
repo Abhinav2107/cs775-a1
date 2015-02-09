@@ -62,7 +62,8 @@ namespace bvh
     void render_pose(joint_t *jtptr);
     
  public:
-    
+   
+    bool transformer;
     //! Constructor
     /*! The bvh filename is specified so that read can be called from the constructor
      *  and thus the bvh file gets loaded as soon as the object is instantiated

@@ -92,6 +92,7 @@ int main(int argc, char **argv)
   try 
     { 
       bvh_fig = new bvh::bvh_t(bvhfilename, true); 
+      bvh_fig->transformer = false;
       try 
 	{ 
 	  bvh_fig->print_hierarchy(std::cout); 

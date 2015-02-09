@@ -251,7 +251,7 @@ void joint_t::print(std::ostream &out)
 void joint_t::update_matrix(float *data_channels)
 {
   /* CS775: Implement this method. */
-    int i, j;
+    int i;
  /*   for(i = 0; i < 4; i++) {
         for(j = 0; j < 4; j++) {
             if(i == j)
@@ -310,6 +310,8 @@ void joint_t::update_matrix(float *data_channels)
 
 double joint_t::get_max_offset() {
     double max_offset = absolute_offset.length();
+    if(joint_type == _root)
+        max_offset = 0;
     std::list<joint_t *>::const_iterator iterator;
     double child_offset;
     for(iterator = childlist.begin(); iterator != childlist.end(); iterator++) {

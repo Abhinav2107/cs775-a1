@@ -129,7 +129,7 @@ void bvh_t::render_pose(joint_t *jtptr)
 
     // Render Joint
     glColor4f(1.0, 0.0, 0.0, 1.0);
-    glutSolidSphere(jtptr->get_render_joint_size(), 30, 30);
+    glutSolidSphere(jtptr->get_render_joint_size() * 3, 30, 30);
 
     // For each child: render link, render joint
     std::list<joint_t *>::const_iterator iterator;
@@ -143,7 +143,7 @@ void bvh_t::render_pose(joint_t *jtptr)
         else
             glRotatef(180 * acos(offset[0]/len) / PI, 0, -(len * offset[2]), len * offset[1]);
         glTranslatef(len / 2, 0, 0);
-        glScalef(len, 0.5, 0.5);
+        glScalef(len, 3, 3);
         glColor4f(0.0, 0.0, 1.0, 1.0);
         glutSolidCube(1);
         glPopMatrix();
