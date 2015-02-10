@@ -157,6 +157,7 @@ void bvh_t::render_pose(joint_t *jtptr)
 void bvh_t::render_canonical_pose(void)
 {
   /* CS775: Implement this method */
+    if(!transformer) {
     std::list<joint_t *>::const_iterator iterator;
     float data_channels[6] = {};
     for(iterator = (*(hierarchy->get_joint_list())).begin(); iterator != (*(hierarchy->get_joint_list())).end(); iterator++) {
@@ -164,6 +165,81 @@ void bvh_t::render_canonical_pose(void)
         j->update_matrix(data_channels);
     }
     render_pose(hierarchy->get_root_ptr());
+    }
+    else {
+    b->pos_x = 0;
+    b->pos_y = 0;
+    b->pos_z = 0;
+
+    //b->elbows_y_offset = 0;
+    //b->count_elbows_in = 0;
+    //b->count_elbows_out = 0;
+
+    //Body Parts
+    /*Waist*/
+    b->waist_x = 0;
+    b->waist_y = 0;
+    b->waist_z = 0;
+
+    /*Neck*/
+    b->neck_x = 0;
+    b->neck_y = 0;
+    b->neck_z = 0;
+
+    /*Right Shoulder*/
+    b->right_shoulder_x = 0;
+    b->right_shoulder_y = 0;
+    b->right_shoulder_z = 0;
+
+    /*Left Shoulder*/
+    b->left_shoulder_x = 0;
+    b->left_shoulder_y = 0;
+    b->left_shoulder_z = 0;
+
+    /*Right Wrist*/
+    b->right_wrist_x = 0;
+    b->right_wrist_z = 0;
+
+    /*Left Wrist*/
+    b->left_wrist_x = 0;
+    b->left_wrist_z = 0;
+
+    /*Right Hip*/
+    b->right_hip_x = 0;
+    b->right_hip_y = 0;
+    b->right_hip_z = 0;
+
+    /*Left Hip*/
+    b->left_hip_x = 0;
+    b->left_hip_y = 0;
+    b->left_hip_z = 0;
+
+    /*Left Elbow*/
+    b->left_elbow_x = 0;
+
+    /*Right Elbow*/
+    b->right_elbow_x = 0;
+
+    /*Left Knee*/
+    b->left_knee_x = 0;
+
+    /*Right Knee*/
+    b->right_knee_x = 0;
+
+    /*Left Ankle*/
+    b->left_ankle_x = 0;
+    b->left_ankle_y = 0;
+
+    /*Right Ankle*/
+    b->right_ankle_x = 0;
+    b->right_ankle_y = 0;
+
+    /*Shoulder Joints*/
+    b->rs_joint_x = 0;
+    b->ls_joint_x = 0;
+    b->render();
+    
+    }
 }
 
 
@@ -171,6 +247,7 @@ void bvh_t::render_canonical_pose(void)
 void bvh_t::render_frame(unsigned int frame_number)
 {
   /* CS775: Implement this method */
+    if(!transformer) {
     std::list<joint_t *>::const_iterator iterator;
     float data_channels[6] = {};
     int count = 0;
@@ -182,81 +259,84 @@ void bvh_t::render_frame(unsigned int frame_number)
         j->update_matrix(data_channels);
     }
     render_pose(hierarchy->get_root_ptr());
-
+    }
     /*le Transformer*/    
-    body* b;
-
+    else {
     /*Variables for Transformer*/
-    b->pos_x = data_channels[0];
-    b->pos_y = data_channels[1];
-    b->pos_z = data_channels[2];
+    float * parameters;
+    parameters = motion->get_data()[frame_number];
+    b->pos_x = parameters[0];
+    b->pos_y = parameters[1];
+    b->pos_z = parameters[2];
 
-    //b->elbows_y_offset = data_channels[];
-    //b->count_elbows_in = data_channels[];
-    //b->count_elbows_out = data_channels[];
+    //b->elbows_y_offset = parameters[];
+    //b->count_elbows_in = parameters[];
+    //b->count_elbows_out = parameters[];
 
     //Body Parts
     /*Waist*/
-    b->waist_x = data_channels[4];
-    b->waist_y = data_channels[5];
-    b->waist_z = data_channels[3];
+    b->waist_x = parameters[4];
+    b->waist_y = parameters[5];
+    b->waist_z = parameters[3];
 
     /*Neck*/
-    b->neck_x = data_channels[13];
-    b->neck_y = data_channels[14];
-    b->neck_z = data_channels[12];
+    b->neck_x = parameters[13];
+    b->neck_y = parameters[14];
+    b->neck_z = parameters[12];
 
     /*Right Shoulder*/
-    b->right_shoulder_x = data_channels[34];
-    b->right_shoulder_y = data_channels[35];
-    b->right_shoulder_z = data_channels[33];
+    b->right_shoulder_x = parameters[34];
+    b->right_shoulder_y = parameters[35];
+    b->right_shoulder_z = parameters[33];
 
     /*Left Shoulder*/
-    b->left_shoulder_x = data_channels[25];
-    b->left_shoulder_y = data_channels[26];
-    b->left_shoulder_z = data_channels[24];
+    b->left_shoulder_x = parameters[25];
+    b->left_shoulder_y = parameters[26];
+    b->left_shoulder_z = parameters[24];
 
     /*Right Wrist*/
-    b->right_wrist_x = data_channels[40];
-    b->right_wrist_z = data_channels[39];
+    b->right_wrist_x = parameters[40];
+    b->right_wrist_z = parameters[39];
 
     /*Left Wrist*/
-    b->left_wrist_x = data_channels[31];
-    b->left_wrist_z = data_channels[30];
+    b->left_wrist_x = parameters[31];
+    b->left_wrist_z = parameters[30];
 
     /*Right Hip*/
-    b->right_hip_x = data_channels[55];
-    b->right_hip_y = data_channels[56];
-    b->right_hip_z = data_channels[54];
+    b->right_hip_x = parameters[55];
+    b->right_hip_y = parameters[56];
+    b->right_hip_z = parameters[54];
 
     /*Left Hip*/
-    b->left_hip_x = data_channels[43];
-    b->left_hip_y = data_channels[44];
-    b->left_hip_z = data_channels[42];
+    b->left_hip_x = parameters[43];
+    b->left_hip_y = parameters[44];
+    b->left_hip_z = parameters[42];
 
     /*Left Elbow*/
-    b->left_elbow_x = data_channels[28];
+    b->left_elbow_x = parameters[28];
 
     /*Right Elbow*/
-    b->right_elbow_x = data_channels[37];
+    b->right_elbow_x = parameters[37];
 
     /*Left Knee*/
-    b->left_knee_x = data_channels[46];
+    b->left_knee_x = parameters[46];
 
     /*Right Knee*/
-    b->right_knee_x = data_channels[58];
+    b->right_knee_x = parameters[58];
 
     /*Left Ankle*/
-    b->left_ankle_x = data_channels[49];
-    b->left_ankle_y = data_channels[50];
+    b->left_ankle_x = parameters[49];
+    b->left_ankle_y = parameters[50];
 
     /*Right Ankle*/
-    b->right_ankle_x = data_channels[61];
-    b->right_ankle_y = data_channels[62];
+    b->right_ankle_x = parameters[61];
+    b->right_ankle_y = parameters[62];
 
     /*Shoulder Joints*/
-    b->rs_joint_x = data_channels[31];
-    b->ls_joint_x = data_channels[22];
+    b->rs_joint_x = parameters[31];
+    b->ls_joint_x = parameters[22];
+    b->render();
+    }
 }
 
 double bvh_t::get_max_offset() {

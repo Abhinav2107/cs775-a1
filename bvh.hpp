@@ -19,6 +19,7 @@
 #include "bvh_hierarchy.hpp"
 #include "matvec.hpp"
 #include "gl_interface.hpp"
+#include "body.hpp"
 
 namespace bvh
 {
@@ -64,6 +65,7 @@ namespace bvh
  public:
    
     bool transformer;
+    body * b;
     //! Constructor
     /*! The bvh filename is specified so that read can be called from the constructor
      *  and thus the bvh file gets loaded as soon as the object is instantiated

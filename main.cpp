@@ -8,6 +8,7 @@ double pos_y = 0;
 double pos_z = 0;
 int camera = 1;
 bool play = false;
+bool transformer = false;
 void usage(void) 
 {
   std::cerr<< "usage: "<<progname<<" [-h] -i bvhfile"<<std::endl<<std::endl;
@@ -20,6 +21,9 @@ void usage(void)
 
 void renderGL(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    bvh_fig->transformer = transformer;
+    if(!bvh_fig->transformer) {
+    glDisable(GL_LIGHTING);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glFrustum(-(1 * r), 1 * r, -(0.75 * r), 0.75 * r, 3.5*r, 15 * r);
@@ -56,12 +60,16 @@ void renderGL(void) {
         glVertex3f(x, 100 * r, z);
     }
     glEnd();
+    }
+    else {
+        glEnable(GL_LIGHTING);
+    }
     if(frame >= 0)
         bvh_fig->render_frame(frame);
     else
         bvh_fig->render_canonical_pose();
     glColor4f(1.0, 1.0, 1.0, 1.0);
-    glEnd();
+    //glEnd();
 }
 int main(int argc, char **argv)
 {
@@ -130,6 +138,9 @@ int main(int argc, char **argv)
     double time;
     double step = (bvh_fig->get_motion()->get_frame_rate());
     int frames = bvh_fig->get_motion()->get_frames();
+    LoadGLTextures();
+    loadLightings();
+    bvh_fig->b = new body();
     while(glfwWindowShouldClose(window) == 0) {
         if(play && frame < frames-1)
             frame++;

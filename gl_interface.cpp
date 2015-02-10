@@ -5,17 +5,19 @@ extern double p;
 extern bool play;
 extern int frame;
 extern int camera;
+extern bool transformer;
 
 void initGL(void) {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClearDepth(1.0);
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST);
+    glShadeModel(GL_SMOOTH);
     char fakeParam[] = "fake";
     char *fakeargv[] = { fakeParam, NULL };
     int fakeargc = 1;
 
-    glutInit( &fakeargc, fakeargv );
+//    glutInit( &fakeargc, fakeargv );
     //glShadeModel(GL_SMOOTH)
 }
 
@@ -68,6 +70,9 @@ void key_callback(GLFWwindow * window, int key, int scancode, int action, int mo
     else if(key == GLFW_KEY_R && (action == GLFW_PRESS)) {
         frame = -1;
         play = false;
+    }
+    else if(key == GLFW_KEY_T && (action == GLFW_PRESS)) {
+        transformer = !transformer;
     }
 
 }

@@ -26,6 +26,7 @@
 #include "bvh.hpp"
 #include "error.hpp"
 #include "gl_interface.hpp"
+#include "gl_framework.hpp"
 
 bvh::bvh_t* bvh_fig;
 std::string progname, bvhfilename;
