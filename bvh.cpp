@@ -176,6 +176,10 @@ void bvh_t::render_canonical_pose(void)
     //b->count_elbows_out = 0;
 
     //Body Parts
+    //
+    b->rotate_x_angle = 0;
+    b->rotate_y_angle = 0;
+    b->rotate_z_angle = 0;
     /*Waist*/
     b->waist_x = 0;
     b->waist_y = 0;
@@ -265,76 +269,88 @@ void bvh_t::render_frame(unsigned int frame_number)
     /*Variables for Transformer*/
     float * parameters;
     parameters = motion->get_data()[frame_number];
-    b->pos_x = parameters[0];
-    b->pos_y = parameters[1];
-    b->pos_z = parameters[2];
+    b->pos_x = (parameters[0] - hierarchy->get_root_ptr()->get_offset()[0])/100;
+    b->pos_y = (parameters[1] - hierarchy->get_root_ptr()->get_offset()[1])/100;
+    b->pos_z = (parameters[2] - hierarchy->get_root_ptr()->get_offset()[2])/100;
 
     //b->elbows_y_offset = parameters[];
     //b->count_elbows_in = parameters[];
     //b->count_elbows_out = parameters[];
 
     //Body Parts
+    //
+
+    b->rotate_x_angle = parameters[4] + 0;
+    b->rotate_y_angle = parameters[5] + 0;
+    b->rotate_z_angle = parameters[3] + 0;
     /*Waist*/
-    b->waist_x = parameters[4];
-    b->waist_y = parameters[5];
-    b->waist_z = parameters[3];
-
+    b->waist_x = parameters[7];
+    b->waist_y = parameters[8];
+    b->waist_z = parameters[6];
     /*Neck*/
-    b->neck_x = parameters[13];
-    b->neck_y = parameters[14];
-    b->neck_z = parameters[12];
+    b->neck_x = parameters[16];
+    b->neck_y = parameters[17];
+    b->neck_z = parameters[15];
 
-    /*Right Shoulder*/
-    b->right_shoulder_x = parameters[34];
-    b->right_shoulder_y = parameters[35];
-    b->right_shoulder_z = parameters[33];
+    /*left Shoulder*/
+    b->left_shoulder_x = parameters[37];
+    b->left_shoulder_y = parameters[38];
+    b->left_shoulder_z = parameters[36];
 
-    /*Left Shoulder*/
-    b->left_shoulder_x = parameters[25];
-    b->left_shoulder_y = parameters[26];
-    b->left_shoulder_z = parameters[24];
+    /*right Shoulder*/
+    b->right_shoulder_x = parameters[25];
+    b->right_shoulder_y = parameters[26];
+    b->right_shoulder_z = parameters[24];
 
-    /*Right Wrist*/
-    b->right_wrist_x = parameters[40];
-    b->right_wrist_z = parameters[39];
+    /*left Wrist*/
+    b->left_wrist_x = parameters[43];
+    b->left_wrist_z = parameters[42];
 
-    /*Left Wrist*/
-    b->left_wrist_x = parameters[31];
-    b->left_wrist_z = parameters[30];
+    /*right Wrist*/
+    b->right_wrist_x = parameters[31];
+    b->right_wrist_z = parameters[30];
 
-    /*Right Hip*/
-    b->right_hip_x = parameters[55];
-    b->right_hip_y = parameters[56];
-    b->right_hip_z = parameters[54];
+    /*left Hip*/
+    b->left_hip_x = parameters[58];
+    b->left_hip_y = parameters[59];
+    b->left_hip_z = parameters[57];
 
-    /*Left Hip*/
-    b->left_hip_x = parameters[43];
-    b->left_hip_y = parameters[44];
-    b->left_hip_z = parameters[42];
+    /*right Hip*/
+    b->right_hip_x = parameters[46];
+    b->right_hip_y = parameters[47];
+    b->right_hip_z = parameters[45];
 
-    /*Left Elbow*/
-    b->left_elbow_x = parameters[28];
+    /*right Elbow*/
+    b->right_elbow_x = parameters[28];
+    b->right_elbow_y = parameters[29];
+    b->right_elbow_z = parameters[27];
 
-    /*Right Elbow*/
-    b->right_elbow_x = parameters[37];
+    /*left Elbow*/
+    b->left_elbow_x = parameters[40];
+    b->left_elbow_y = parameters[41];
+    b->left_elbow_z = parameters[39];
 
-    /*Left Knee*/
-    b->left_knee_x = parameters[46];
+    /*right Knee*/
+    b->right_knee_x = parameters[49];
+    b->right_knee_y = parameters[50];
+    b->right_knee_z = parameters[48];
 
-    /*Right Knee*/
-    b->right_knee_x = parameters[58];
+    /*left Knee*/
+    b->left_knee_x = parameters[61];
+    b->left_knee_y = parameters[62];
+    b->left_knee_z = parameters[60];
 
-    /*Left Ankle*/
-    b->left_ankle_x = parameters[49];
-    b->left_ankle_y = parameters[50];
+    /*right Ankle*/
+    b->right_ankle_x = parameters[52];
+    b->right_ankle_y = parameters[53];
 
-    /*Right Ankle*/
-    b->right_ankle_x = parameters[61];
-    b->right_ankle_y = parameters[62];
+    /*left Ankle*/
+    b->left_ankle_x = parameters[64];
+    b->left_ankle_y = parameters[65];
 
     /*Shoulder Joints*/
-    b->rs_joint_x = parameters[31];
-    b->ls_joint_x = parameters[22];
+//    b->rs_joint_x = parameters[34];
+//    b->ls_joint_x = parameters[22];
     b->render();
     }
 }

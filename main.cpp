@@ -63,6 +63,12 @@ void renderGL(void) {
     }
     else {
         glEnable(GL_LIGHTING);
+        if(camera == 1) {
+            bvh_fig->b->camera_free = true;
+        }
+        else if(camera == 2) {
+            bvh_fig->b->camera_free = false;
+        }
     }
     if(frame >= 0)
         bvh_fig->render_frame(frame);

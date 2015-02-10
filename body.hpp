@@ -134,12 +134,20 @@ double left_hip_y;
 double left_hip_z;
 
 double right_elbow_x;
+double right_elbow_y;
+double right_elbow_z;
 
 double left_elbow_x;
+double left_elbow_y;
+double left_elbow_z;
 
 double right_knee_x;
+double right_knee_y;
+double right_knee_z;
 
 double left_knee_x;
+double left_knee_y;
+double left_knee_z;
 
 double rs_joint_x;
 double ls_joint_x;

@@ -140,15 +140,23 @@ body::body() {
 
     /*Left Elbow*/
     left_elbow_x = 0;
+    left_elbow_x = 0;
+    left_elbow_x = 0;
 
     /*Right Elbow*/
     right_elbow_x = 0;
+    right_elbow_y = 0;
+    right_elbow_z = 0;
 
     /*Left Knee*/
     left_knee_x = 0;
+    left_knee_y = 0;
+    left_knee_z = 0;
 
     /*Right Knee*/
     right_knee_x = 0;
+    right_knee_y = 0;
+    right_knee_z = 0;
 
     /*Left Ankle*/
     left_ankle_x = 0;
@@ -162,10 +170,8 @@ body::body() {
     rs_joint_x = 0;
     ls_joint_x = 0;
 
-    std::cout << "Before Generating Display Lists" << std::endl;
     /*Number of Lists to Display*/
     glGenLists(15);
-    std::cout << "Before Display Lists" << std::endl;
     /*Initialise Display Lists*/
     init_pelvis();
     init_torso();
@@ -270,31 +276,36 @@ void body::render()
 
     //Translate/turn according to key movments
     glTranslatef(pos_x, pos_y, pos_z);
-    glRotatef(rotate_y_angle, 0, 1, 0);
-
     //To transform the bot into car
     //transform();
     //Get back to bot state
     //revert();
+    
+    glRotatef(rotate_z_angle, 0, 0, 1);
+    glRotatef(rotate_x_angle, 1, 0, 0);
+    glRotatef(rotate_y_angle, 0, 1, 0);
 
-
+    glRotatef(99.45, 0, 1, 0);
+    glRotatef(69.49, 1, 0, 0);
+    glRotatef(9.21, 0, 0, 1);
     //Bot rendering begins
     //The pelvis
     glPushMatrix();
         glCallList(pelvis);
     glPopMatrix();
-
     glPushMatrix();
         glTranslatef(0.0, 0.025, 0.0);
+        glRotatef(waist_z, 0.0, 0.0, 1.0);
         glRotatef(waist_x, 1.0, 0.0, 0.0); 
         glRotatef(waist_y, 0.0, 1.0, 0.0);
-        glRotatef(waist_z, 0.0, 0.0, 1.0);
+        glRotatef(-88.87, 0.0, 1.0, 0.0);
+        glRotatef(70.19, 0.0, 0.0, 1.0);
         glTranslatef(0.0, -0.025, 0.0);
         
         //Torso portion
         glPushMatrix();
             glCallList(torso);            
-            if(headlight) 
+            if(headlight)
             {  
                 GLfloat emit[] = {1.0, 1.0, 1.0, 1.0};
                 glMaterialfv(GL_FRONT, GL_EMISSION, emit);
@@ -316,9 +327,14 @@ void body::render()
         //Head
         glPushMatrix();
             glTranslatef(0.0, 0.425, 0.0);
+            glRotatef(neck_z, 0.0, 0.0, 1.0);
             glRotatef(neck_x, 1.0, 0.0, 0.0);
             glRotatef(neck_y, 0.0, 1.0, 0.0);
-            glRotatef(neck_z, 0.0, 0.0, 1.0);
+
+            glRotatef(-178.86, 0.0, 1.0, 0.0);
+            glRotatef(-19.97, 1.0, 0.0, 0.0);
+            glRotatef(158.86, 0.0, 0.0, 1.0);
+            
             glTranslatef(0.0, -0.425, 0.0);
             glCallList(head);
         glPopMatrix();
@@ -335,12 +351,18 @@ void body::render()
             /*Move pivot back*/
             glTranslatef(-0.13, 0.375, 0.0);
             /*Shoulder Y rotation*/
-            glRotatef(right_shoulder_y, 0.0, 1.0, 0.0);
             /*Shoulder Z rotation*/
             glRotatef(right_shoulder_z, 0.0, 0.0, 1.0); 
             /*Shoulder X rotation*/
             glRotatef(right_shoulder_x, 1.0, 0.0, 0.0); 
-                /*Get pivot to origin*/
+            glRotatef(right_shoulder_y, 0.0, 1.0, 0.0);
+            
+
+            glRotatef(97.23, 0.0, 1.0, 0.0);
+            glRotatef(-43.92, 1.0, 0.0, 0.0);
+            glRotatef(61.04, 0.0, 0.0, 1.0);
+ 
+            /*Get pivot to origin*/
             glTranslatef(0.13, -0.375, 0.0);
 
             glPushMatrix();
@@ -353,7 +375,14 @@ void body::render()
                 glTranslatef(0.0, elbows_y_offset, 0.0);
                 glTranslatef(-0.13, 0.125, 0.0);
                 /*Rotate Elbow Joint*/
+                glRotatef(right_elbow_z, 0.0, 0.0, 1.0);
                 glRotatef(right_elbow_x, 1.0, 0.0, 0.0);
+                glRotatef(right_elbow_y, 0.0, 1.0, 0.0);
+
+                glRotatef(28.40, 0.0, 1.0, 0.0);
+                glRotatef(-15.93, 1.0, 0.0, 0.0);
+                glRotatef(-8.05, 0.0, 0.0, 1.0);
+
                 /*Move pivot up*/
                 glTranslatef(0.13, -0.125, 0.0);
 
@@ -362,8 +391,8 @@ void body::render()
                 glPopMatrix();
 
                 glTranslatef(-0.16, -0.175, 0.0);
-                glRotatef(right_wrist_x, 1.0, 0.0, 0.0);
                 glRotatef(right_wrist_z, 0.0, 0.0, 1.0);
+                glRotatef(right_wrist_x, 1.0, 0.0, 0.0);
                 glTranslatef(0.16, 0.175, 0.0);
 
                 /*Wrist*/
@@ -387,11 +416,17 @@ void body::render()
             /*Move pivot back*/
             glTranslatef(0.13, 0.375, 0.0);
             /*Shoulder Y rotation*/
-            glRotatef(left_shoulder_y, 0.0, 1.0, 0.0);
             /*Shoulder Z rotation*/
             glRotatef(left_shoulder_z, 0.0, 0.0, 1.0); 
             /*Shoulder X rotation*/
             glRotatef(left_shoulder_x, 1.0, 0.0, 0.0); 
+            glRotatef(left_shoulder_y, 0.0, 1.0, 0.0);
+
+            glRotatef(-97.83, 0.0, 1.0, 0.0);
+            glRotatef(32.55, 1.0, 0.0, 0.0);
+            glRotatef(63.80, 0.0, 0.0, 1.0);
+
+           
             /*Get pivot to origin*/
             glTranslatef(-0.13, -0.375, 0.0);
 
@@ -405,7 +440,15 @@ void body::render()
                 glTranslatef(0.0, elbows_y_offset, 0.0);
                 glTranslatef(0.13, 0.125, 0.0);
                 /*Rotate Elbow Joint*/
+                glRotatef(left_elbow_z, 0.0, 0.0, 1.0);
                 glRotatef(left_elbow_x, 1.0, 0.0, 0.0);
+                glRotatef(left_elbow_y, 0.0, 1.0, 0.0);
+
+                glRotatef(-22.52, 0.0, 1.0, 0.0);
+                glRotatef(12.31, 1.0, 0.0, 0.0);
+                glRotatef(0.01, 0.0, 0.0, 1.0);
+
+
                 /*Move pivot up*/
                 glTranslatef(-0.13, -0.125, 0.0);
 
@@ -414,8 +457,8 @@ void body::render()
                 glPopMatrix();
 
                 glTranslatef(0.16, -0.175, 0.0);
-                glRotatef(left_wrist_x, 1.0, 0.0, 0.0);
                 glRotatef(left_wrist_z, 0.0, 0.0, 1.0);
+                glRotatef(left_wrist_x, 1.0, 0.0, 0.0);
                 glTranslatef(-0.16, 0.175, 0.0);
 
                 /*Wrist*/
@@ -433,9 +476,16 @@ void body::render()
     /*The right leg begins*/
     glPushMatrix();
         glTranslatef(-0.06, -0.025, 0.0);
+        glRotatef(right_hip_z, 0.0, 0.0, 1.0);
         glRotatef(right_hip_x, 1.0, 0.0, 0.0);
         glRotatef(right_hip_y, 0.0, 1.0, 0.0);
-        glRotatef(right_hip_z, 0.0, 0.0, 1.0);
+       
+       
+        glRotatef(-99.41, 0.0, 1.0, 0.0);
+        glRotatef(-2.78, 1.0, 0.0, 0.0);
+        glRotatef(54.51, 0.0, 0.0, 1.0);
+
+
         glTranslatef(0.06, 0.025, 0.0);
 
         glPushMatrix();
@@ -450,7 +500,14 @@ void body::render()
         /*Leg below knees*/
         glPushMatrix();
             glTranslatef(0.06, -0.345, 0.0);
+            glRotatef(right_knee_z, 0.0, 0.0, 1.0);
             glRotatef(right_knee_x, 1.0, 0.0, 0.0);
+            glRotatef(right_knee_y, 0.0, 1.0, 0.0);
+
+            glRotatef(6.32, 0.0, 1.0, 0.0);
+            glRotatef(-3.72, 1.0, 0.0, 0.0);
+            glRotatef(5.93, 0.0, 0.0, 1.0);
+
             glTranslatef(-0.06, 0.345, 0.0);
 
             glPushMatrix();
@@ -479,9 +536,14 @@ void body::render()
     /*The left leg begins*/
     glPushMatrix();
         glTranslatef(0.06, -0.025, 0.0);
+        glRotatef(left_hip_z, 0.0, 0.0, 1.0);
         glRotatef(left_hip_x, 1.0, 0.0, 0.0);
         glRotatef(left_hip_y, 0.0, 1.0, 0.0);
-        glRotatef(left_hip_z, 0.0, 0.0, 1.0);
+    
+        glRotatef(-81.45, 0.0, 1.0, 0.0);
+        glRotatef(0.18, 1.0, 0.0, 0.0);
+        glRotatef(55.59, 0.0, 0.0, 1.0);
+ 
         glTranslatef(-0.06, 0.025, 0.0);
 
         glPushMatrix();
@@ -496,7 +558,14 @@ void body::render()
         /*Leg below knees*/
         glPushMatrix();
             glTranslatef(0.06, -0.345, 0.0);
+            glRotatef(left_knee_z, 0.0, 0.0, 1.0);
             glRotatef(left_knee_x, 1.0, 0.0, 0.0);
+            glRotatef(left_knee_y, 0.0, 1.0, 0.0);
+
+            glRotatef(-6.74, 0.0, 1.0, 0.0);
+            glRotatef(-13.67, 1.0, 0.0, 0.0);
+            glRotatef(-1.38, 0.0, 0.0, 1.0);
+
             glTranslatef(-0.06, 0.345, 0.0);
 
             glPushMatrix();
